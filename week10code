@@ -1,0 +1,31 @@
+def track_usage(data_log):
+    network_dict = {}
+    for entry in data_log:
+        department, user, mb = entry.split(";")
+        mb = int(mb)
+        if department not in network_dict:
+            network_dict[department] = []  
+
+        network_dict[department].append((user, mb)) 
+
+    return network_dict
+
+
+def audit_departments(network_dict):
+    for department, usage_list in network_dict.items():
+        total_mb = 0
+        for user, mb in usage_list:
+            total_mb += mb
+        print(f"{department}: {total_mb} MB total")
+
+data_log = [
+    "Sales;Alice;500",
+    "Engineering;Bob;1200",
+    "Sales;Charlie;300",
+    "HR;David;150",
+    "Engineering;Eve;800",
+    "HR;Frank;100"
+]
+
+network_dict = track_usage(data_log)
+audit_departments(network_dict)
